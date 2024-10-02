@@ -1,0 +1,43 @@
+<div class="d-flex align-items-center mb-4">
+    <img src="assets/default-profile.png" class="rounded-circle me-3" width="80" height="80" alt="User Profile Picture">
+    <div>
+      <h4 class="mb-1">{{ username }}</h4>
+      <p class="text-muted">{{ postCount }} posts</p>
+    </div>
+    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+        Launch demo modal
+      </button>
+  </div>
+  
+
+  <div id="exampleModal" class="modal" tabindex="-1">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Upload Image</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+            <div class="frame">
+                <div class="center">
+                    <div class="title">
+                        <h1>Drop file to upload</h1>
+                    </div>
+            
+                    <div class="dropzone">
+                        <img src="http://100dayscss.com/codepen/upload.svg" class="upload-icon" />
+                        <input type="file" class="upload-input" />
+                    </div>            
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-primary">Upload file</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+
