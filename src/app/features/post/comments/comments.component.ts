@@ -1,11 +1,13 @@
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { addDoc, collection, collectionData, deleteDoc, doc, Firestore, updateDoc } from '@angular/fire/firestore';
+import { CommonModule } from '@angular/common';
+import { IComment } from '../../../core/interfaces/comment.interface';
 
 @Component({
   selector: 'app-comments',
   standalone: true,
-  imports: [FormsModule],
+  imports: [FormsModule, CommonModule],
   templateUrl: './comments.component.html',
   styleUrl: './comments.component.scss'
 })
@@ -18,7 +20,7 @@ export class CommentsComponent {
   and delete a comment in the Comments Collection.
   */
   comment= { post_id: '', text: '', user_id: '' }
-  comments: any[] = [];
+  comments: IComment[] = [];
 
   constructor(
     private firestore: Firestore
@@ -37,7 +39,13 @@ export class CommentsComponent {
     const commentCollection =  collection(this.firestore, 'comments');
     collectionData(commentCollection, {idField: 'id'}).subscribe({
       next: (comments) => {
-        this.comments = comments;
+        this.comments = comments.map(comment => ({
+          id: comment.id,
+          postId: comment['postId'] || '',
+          body: comment['body'] || '', 
+          date: comment['date'] || '', 
+          userId: comment['userId'] || '' 
+        })) as IComment[];
         console.log('Comments:', comments);
       },
       error: (error) => {
