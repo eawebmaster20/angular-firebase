@@ -1,0 +1,19 @@
+<div>
+    <div class="icons">
+      <i class="bi bi-type-bold" (click)="applyCommand('bold')"></i>
+      <i class="bi bi-type-italic" (click)="applyCommand('italic')"></i>
+      <i class="bi bi-type-underline" (click)="applyCommand('underline')"></i>
+      <i class="bi bi-link" (click)="applyCommand('createLink')"></i>
+    </div>
+  
+    <div
+      contenteditable="true"
+      #text 
+      (input)="onInput($event)"
+      (mouseup)="onMouseUp($event)"
+      (blur)="onTouch()"
+      class="editor"
+      [innerHTML]="formValue"
+    ></div>
+  </div>
+  
