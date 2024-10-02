@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
-import { Auth, signInWithEmailAndPassword } from '@angular/fire/auth';
 import { FormsModule } from '@angular/forms';
 import { GoogleAuthProvider, signInWithPopup } from 'firebase/auth';
+import { AuthService } from '../../../core/services/auth/auth.service';
 
 @Component({
   selector: 'app-login',
@@ -14,16 +14,24 @@ export class LoginComponent {
 email=''
 password=''
 
-constructor(private firebaseAuth: Auth){}
+constructor(private authService:AuthService){}
 login(){
-  signInWithEmailAndPassword(this.firebaseAuth,this.email, this.password)
-  .then((res:any)=>{console.log(res);})
+  this.authService.login(this.email, this.password).subscribe({
+    next: (value) => {console.log(value)},
+    error: (error) => {console.error(error)}
+  })
 }
 logout(){
-  this.firebaseAuth.signOut()
+  this.authService.logout().subscribe({
+    next: (value) => {console.log(value)},
+    error: (error) => {console.error(error)}
+  });
 }
 
 googleAuth(){
-  signInWithPopup(this.firebaseAuth,new GoogleAuthProvider()).then((res:any)=>{console.log(res)})
+  this.authService.googleAuth().subscribe({
+    next: (value) => {console.log(value)},
+    error: (error) => {console.error(error)} 
+  })
   }
 }
