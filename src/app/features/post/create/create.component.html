@@ -1,3 +1,11 @@
-<input [(ngModel)]="post.title" type="text">
+<!-- <input [(ngModel)]="post.title" type="text">
 <textarea [(ngModel)]="post.body" type="text"></textarea>
-<button (click)="getSinglePost('-O87TuV1Se7mvE1QeCWb')">post</button>
+<button (click)="getSinglePost('-O87TuV1Se7mvE1QeCWb')">post</button> -->
+
+<div class="mb-4">
+    <div class="form-group">
+        <textarea [(ngModel)]="post.body" class="form-control" rows="3" placeholder="What's on your mind?"></textarea>
+    </div>
+    <button (click)="createPost()" class="btn btn-primary mt-2 float-end">Post</button>
+</div>
+  
