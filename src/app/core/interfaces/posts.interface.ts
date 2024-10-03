@@ -3,7 +3,7 @@ export interface IPost{
     title: string;
     content: string;
     category: string;
-    date: Date;
+    date: string;
     userId?: string;
     emailVerified?: boolean;
 }

@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { GoogleAuthProvider, signInWithPopup } from 'firebase/auth';
 import { AuthService } from '../../../core/services/auth/auth.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-login',
@@ -14,7 +15,10 @@ export class LoginComponent {
 email=''
 password=''
 
-constructor(private authService:AuthService){}
+constructor(
+  private authService:AuthService,
+  private router:Router
+){}
 login(){
   this.authService.login(this.email, this.password).subscribe({
     next: (value) => {console.log(value)},
@@ -23,7 +27,9 @@ login(){
 }
 logout(){
   this.authService.logout().subscribe({
-    next: (value) => {console.log(value)},
+    next: (value) => {
+      this.router.navigate([''])
+    },
     error: (error) => {console.error(error)}
   });
 }

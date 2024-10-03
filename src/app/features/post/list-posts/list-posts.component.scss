@@ -1,0 +1,28 @@
+.post-card {
+    position: relative;
+    
+    .edit-btn {
+        position: absolute;
+        left: 10rem;
+        bottom: 20px;
+        opacity: 0;
+        transition: opacity 0.3s ease-in-out;
+    }
+    .delete-btn{
+        position: absolute;
+        left: 13rem;
+        bottom: 20px;
+        opacity: 0;
+        transition: opacity 0.3s ease-in-out;
+    }
+  
+    &:hover{
+        .delete-btn{
+            opacity: 1;
+        }
+        .edit-btn{
+            opacity: 1;
+        }
+    }
+  }
+  

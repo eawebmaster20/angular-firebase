@@ -13,7 +13,7 @@ import { CommentsComponent } from '../comments/comments.component';
 })
 export class PostDetailsComponent implements OnInit {
 
-  constructor(private metaService: Meta, private titleService: Title, private postService:PostService){}
+  constructor(private metaService: Meta, private titleService: Title, public postService:PostService){}
 
   ngOnInit(): void {
     // Set title and meta tags when the component is initialized

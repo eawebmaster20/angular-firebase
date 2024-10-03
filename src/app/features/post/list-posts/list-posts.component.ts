@@ -3,23 +3,45 @@ import { Component, OnInit } from '@angular/core';
 import { IPost } from '../../../core/interfaces/posts.interface';
 import { PostService } from '../../../core/services/post/post.service';
 import { FormsModule } from '@angular/forms';
+import { Router, RouterLink } from '@angular/router';
+import { ProfileService } from '../../../core/services/profile/profile.service';
 
 @Component({
   selector: 'app-list-posts',
   standalone: true,
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule, RouterLink],
   templateUrl: './list-posts.component.html',
   styleUrl: './list-posts.component.scss'
 })
 export class ListPostsComponent implements OnInit {
-  posts:any = [  ]
+  posts:IPost[] = [
+    {
+      title: 'First Post',
+      content: 'Lorem ipsum dolor sit amet...',
+      date: '2023-01-01',
+      userId: 'Author',
+      category: 'Development'
+    },
+  ];
   newPost:IPost = {
     title: '',
     content: '',
-    date: new Date,
+    userId:'',
+    date: (new Date).toDateString(),
     category: '' ,
   }
-  constructor(private postService:PostService) { }
+  selectedPost:IPost = { ...this.posts[0] };
+  constructor(
+    private postService:PostService, 
+    private router: Router,
+    public profileService:ProfileService
+  ) { }
+
+
+  // Edit the selected post (immutable copy)
+  editPost(post:IPost) {
+    this.selectedPost = { ...post }; 
+  }
   ngOnInit(): void {
     this.getPosts()
   }
@@ -58,5 +80,10 @@ export class ListPostsComponent implements OnInit {
       },
       error: error => console.error('Error getting posts:', error)
     })
+  }
+
+  goToDetail(post:IPost){
+    this.postService.selectedPost = post;
+    this.router.navigate(['/post-details']);
   }
 }

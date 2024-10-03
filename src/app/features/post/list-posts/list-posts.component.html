@@ -6,79 +6,67 @@
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
       <div class="collapse navbar-collapse" id="navbarSupportedContent">
           <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
-              <li class="nav-item"><a class="nav-link" href="#">Home</a></li>
-              <li class="nav-item"><a class="nav-link" href="#!">About</a></li>
-              <li class="nav-item"><a class="nav-link" href="#!">Contact</a></li>
-              <li class="nav-item"><a class="nav-link active" aria-current="page" href="#">Blog</a></li>
+              <li role="button" class="nav-item"><a class="nav-link active" aria-current="page" routerLink="/login">Login</a></li>
           </ul>
       </div>
   </div>
 </nav>
 <div class="mb-3 d-flex justify-content-center">
   <!-- <app-create-post (postCreated)="addPost()"></app-create-post> -->
-
-  <div class="row w-100">
-    <div class="card mb-4 p-0">
-        <div class="card-body">
-            <div class="input-group">
-                <input class="form-control" type="text" placeholder="Enter search term..." aria-label="Enter search term..." aria-describedby="button-search" />
-                <button class="btn btn-primary" id="button-search" type="button">Go!</button>
-            </div>
-        </div>
-    </div>
-</div>
-</div>
-
-
-<div class="container mt-5">
-  <button class="btn btn-primary mb-3" data-bs-toggle="modal" data-bs-target="#createPostModal">Create New Post</button>
-  <div class="row">
+  <div class="container mt-5">
+    <button class="btn btn-primary mb-3" data-bs-toggle="modal" data-bs-target="#createPostModal">Create New Post</button>
+    <div class="row">
       <div class="col">
-          <div *ngFor="let post of posts" class="mb-4">
-              <header class="mb-2">
-                  <h2 class="fw-bolder mb-1">{{ post.title }}</h2>
-                  <div class="text-muted fst-italic">Posted on {{ post.date }} by {{ post.author }}</div>
-                  <!-- <div>
-                      <a class="badge bg-secondary text-decoration-none link-light" href="#!">{{ post.category }}</a>
-                  </div> -->
-              </header>
-              <p class="fs-5 mb-3">{{ post.contentPreview }}</p>
-              <a class="text-decoration-none" href="#!">Continue reading →</a>
-              <hr class="my-4">
-          </div>
-      </div>
-  </div>
-</div>
-
+        <div *ngFor="let post of posts" class="mb-4 position-relative post-card">
+          <header class="mb-2">
+            <h2 class="fw-bolder mb-1">{{ post.title }}</h2>
+            <div class="text-muted fst-italic">Posted on {{ post.date }} by {{ post.id }}</div>
+          </header>
+          <!-- <p class="fs-5 mb-3">{{ post.contentPreview }}</p> -->
+          <a class="text-decoration-none" role="button" (click)="goToDetail(post)">Continue reading →</a>
+          @if (profileService.user) {
+            <div class="">
+              <button class="btn btn-sm btn-outline-secondary edit-btn" (click)="editPost(post)" data-bs-toggle="modal" data-bs-target="#editPostModal">Edit</button>
+              <button class="btn btn-sm btn-outline-danger delete-btn" (click)="deletePost(post.id!)" data-bs-toggle="modal" data-bs-target="#deletePostModal">delete</button>
+            </div>
+          }
   
-<div class="modal fade" id="createPostModal" tabindex="-1" aria-labelledby="createPostModalLabel" aria-hidden="true">
-  <div class="modal-dialog">
-      <div class="modal-content">
-          <div class="modal-header">
-              <h5 class="modal-title" id="createPostModalLabel">Create New Post</h5>
-              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-          </div>
-          <div class="modal-body">
-              <form (submit)="onSubmit()">
-                  <div class="mb-3">
-                      <label for="postTitle" class="form-label">Post Title</label>
-                      <input [(ngModel)]="newPost.title" name="title" type="text" class="form-control" id="postTitle" required>
-                  </div>
-                  <div class="mb-3">
-                      <label for="postContent" class="form-label">Post Content</label>
-                      <textarea [(ngModel)]="newPost.content" name="content" class="form-control" id="postContent" rows="4" required></textarea>
-                  </div>
-                  <div class="mb-3">
-                      <label for="postCategory" class="form-label">Category</label>
-                      <select [(ngModel)]="newPost.category" name="category" class="form-select" id="postCategory" required>
-                          <option value="Web Design">Web Design</option>
-                          <option value="Development">Development</option>
-                          <option value="Freebies">Freebies</option>
-                      </select>
-                  </div>
-                  <button type="submit" class="btn btn-primary">Create Post</button>
-              </form>
-          </div>
+          <hr class="my-4">
+        </div>
       </div>
+    </div>
   </div>
-</div>
+  
+  <!-- Edit Post Modal -->
+  <div class="modal fade" id="editPostModal" tabindex="-1" aria-labelledby="editPostModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="editPostModalLabel">Edit Post</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <form (submit)="createPost()">
+            <div class="mb-3">
+              <label for="editPostTitle" class="form-label">Post Title</label>
+              <input [(ngModel)]="selectedPost.title" name="editTitle" type="text" class="form-control" id="editPostTitle" required>
+            </div>
+            <div class="mb-3">
+              <label for="editPostContent" class="form-label">Post Content</label>
+              <textarea [(ngModel)]="selectedPost.content" name="editContent" class="form-control" id="editPostContent" rows="4" required></textarea>
+            </div>
+            <div class="mb-3">
+              <label for="editPostCategory" class="form-label">Category</label>
+              <select [(ngModel)]="selectedPost.category" name="editCategory" class="form-select" id="editPostCategory" required>
+                <option value="Web Design">Web Design</option>
+                <option value="Development">Development</option>
+                <option value="Freebies">Freebies</option>
+              </select>
+            </div>
+            <button data-bs-dismiss="modal" type="submit" class="btn btn-primary">Save Changes</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+  

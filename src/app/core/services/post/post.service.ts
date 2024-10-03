@@ -7,7 +7,13 @@ import { from, Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class PostService {
-
+  selectedPost:IPost = {
+    title: '',
+    content: '',
+    date: '2023-01-01',
+    userId: 'Author',
+    category: 'Development'
+  }
   constructor(private newDb: Database) { }
 
   createPost(post: IPost){

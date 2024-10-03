@@ -24,7 +24,7 @@ export class CreateComponent{
     title: '',
     content: '',
     category: '',
-    date:new Date(),
+    date:(new Date()).toDateString(),
     userId: ''
   };
 

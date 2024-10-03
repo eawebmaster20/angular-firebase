@@ -1,5 +1,30 @@
-<input [(ngModel)]="email" type="text">
+<!-- <input [(ngModel)]="email" type="text">
 <input [(ngModel)]="password" type="text">
 <button (click)="googleAuth()">login google</button>
 <button (click)="login()">login</button>
-<button (click)="logout()">logout</button>
+<button (click)="logout()">logout</button> -->
+
+<div class="container d-flex justify-content-center align-items-center min-vh-100">
+    <div class="card shadow-lg p-4" style="width: 400px;">
+        <div class="card-body">
+            <h4 class="card-title text-center mb-4">Login to Your Account</h4>
+            <form (submit)="login()">
+                <div class="mb-3">
+                    <label for="email" class="form-label">Email address</label>
+                    <input [(ngModel)]="email" name="email" type="email" class="form-control" id="email" required>
+                </div>
+                <div class="mb-3">
+                    <label for="password" class="form-label">Password</label>
+                    <input [(ngModel)]="password" name="password" type="password" class="form-control" id="password" required>
+                </div>
+                <button type="submit" class="btn btn-primary w-100 mb-3">Login</button>
+                <button type="button" class="btn btn-outline-danger w-100 mb-3" (click)="googleAuth()">
+                    <img src="https://img.icons8.com/color/16/000000/google-logo.png" class="me-2">Login with Google
+                </button>
+            </form>
+            <div class="text-center mt-3">
+                <small>Don't have an account? <a href="#">Sign up</a></small>
+            </div>
+        </div>
+    </div>
+</div>
