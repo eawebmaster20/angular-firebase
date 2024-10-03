@@ -23,6 +23,7 @@ export class CreateComponent{
   post: IPost = {
     title: '',
     body: '',
+    date:new Date(),
     userId: ''
   };
 
