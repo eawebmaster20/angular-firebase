@@ -2,17 +2,22 @@ import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { IPost } from '../../../core/interfaces/posts.interface';
 import { PostService } from '../../../core/services/post/post.service';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-list-posts',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, FormsModule],
   templateUrl: './list-posts.component.html',
   styleUrl: './list-posts.component.scss'
 })
 export class ListPostsComponent implements OnInit {
   posts:any = [  ]
-
+  newPost = {
+    title: '',
+    content: '',
+    category: '' ,
+  }
   constructor(private postService:PostService) { }
   ngOnInit(): void {
     this.postService.getAllPosts().subscribe({
@@ -33,5 +38,9 @@ export class ListPostsComponent implements OnInit {
         console.error('Error deleting post:', error);
       }
     })
+  }
+
+  onSubmit(){
+    console.log(this.newPost)
   }
 }
