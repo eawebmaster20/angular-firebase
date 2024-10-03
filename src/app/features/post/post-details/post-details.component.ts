@@ -2,11 +2,12 @@ import { Component, OnInit } from '@angular/core';
 import { Meta, Title } from '@angular/platform-browser';
 import { PostService } from '../../../core/services/post/post.service';
 import { IPost } from '../../../core/interfaces/posts.interface';
+import { CommentsComponent } from '../comments/comments.component';
 
 @Component({
   selector: 'app-post-details',
   standalone: true,
-  imports: [],
+  imports: [CommentsComponent],
   templateUrl: './post-details.component.html',
   styleUrl: './post-details.component.scss'
 })
