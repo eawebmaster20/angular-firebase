@@ -13,21 +13,15 @@ import { FormsModule } from '@angular/forms';
 })
 export class ListPostsComponent implements OnInit {
   posts:any = [  ]
-  newPost = {
+  newPost:IPost = {
     title: '',
     content: '',
+    date: new Date,
     category: '' ,
   }
   constructor(private postService:PostService) { }
   ngOnInit(): void {
-    this.postService.getAllPosts().subscribe({
-      next: (snapshot) => {
-        snapshot.forEach(childSnapshot => {
-          this.posts.push({ id: childSnapshot.key, ...childSnapshot.val() });
-        });
-      },
-      error: error => console.error('Error getting posts:', error)
-    })
+    this.getPosts()
   }
   deletePost(id: string): void {
     this.postService.deletePost(id).subscribe({
@@ -39,8 +33,30 @@ export class ListPostsComponent implements OnInit {
       }
     })
   }
-
+  createPost() {
+    this.postService.createPost(this.newPost).subscribe({
+      next: () => {
+        console.log('Post created successfully');
+      },
+      error: (error) => {
+        console.error('Error creating post:', error);
+      }
+    })
+  }
   onSubmit(){
-    console.log(this.newPost)
+    console.log(this.newPost);
+    this.createPost();
+    this.getPosts();
+  }
+
+  getPosts(){
+    this.postService.getAllPosts().subscribe({
+      next: (snapshot) => {
+        snapshot.forEach(childSnapshot => {
+          this.posts.push({ id: childSnapshot.key, ...childSnapshot.val() });
+        });
+      },
+      error: error => console.error('Error getting posts:', error)
+    })
   }
 }

@@ -22,7 +22,8 @@ import { PostService } from '../../../core/services/post/post.service';
 export class CreateComponent{
   post: IPost = {
     title: '',
-    body: '',
+    content: '',
+    category: '',
     date:new Date(),
     userId: ''
   };
