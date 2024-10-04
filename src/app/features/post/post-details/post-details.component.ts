@@ -28,13 +28,9 @@ export class PostDetailsComponent implements OnInit {
 
   updateMetaTags() {
     this.titleService.setTitle('My Sample Page Title');
-
-    // Add or update meta tags
     this.metaService.updateTag({ name: 'description', content: 'This is a sample description for SEO purposes.' });
     this.metaService.updateTag({ name: 'keywords', content: 'Angular, SEO, MetaService' });
-
-    // You can also add or remove tags dynamically
     this.metaService.addTag({ name: 'author', content: 'Your Name' });
-    this.metaService.removeTag('name="keywords"');  // Example: remove the 'keywords' tag
+    this.metaService.removeTag('name="keywords"'); 
   }
 }
