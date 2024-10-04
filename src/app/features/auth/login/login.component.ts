@@ -36,7 +36,11 @@ login(){
       toastBootstrap.show();
       this.router.navigate([])
     },
-    error: (error) => {console.error(error)}
+    error: (error) => {
+      console.error(error);
+      const toastBootstrap = new Toast(this.toastLiveExample.nativeElement);
+      toastBootstrap.show();
+    }
   })
 }
 logout(){

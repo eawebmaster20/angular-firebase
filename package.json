@@ -7,7 +7,8 @@
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
-    "serve:ssr:firebase-crud": "node dist/firebase-crud/server/server.mjs"
+    "serve:ssr:firebase-crud": "node dist/firebase-crud/server/server.mjs",
+    "generate-sitemap": "node sitemapGen.js"
   },
   "private": true,
   "dependencies": {
@@ -27,6 +28,7 @@
     "express": "^4.18.2",
     "firebase": "^10.14.0",
     "rxjs": "~7.8.0",
+    "sitemap": "^8.0.0",
     "tslib": "^2.3.0",
     "zone.js": "~0.14.3"
   },
