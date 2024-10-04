@@ -24,25 +24,7 @@ export function app(): express.Express {
     maxAge: '1y'
   }));
 
-  server.get('/sitemap.xml', async (req, res) => {
-    const sitemap = new SitemapStream({ hostname: 'https://your-site.com' });
   
-    // Add static routes
-    sitemap.write({ url: '/', changefreq: 'daily', priority: 1.0 });
-    sitemap.write({ url: '/about', changefreq: 'weekly', priority: 0.8 });
-  
-    // Add dynamic routes (e.g., from a database or API)
-    const posts = await fetchPostsFromAPI(); // Fetch posts from API
-    posts.forEach(post => {
-      sitemap.write({ url: `/posts/${post.id}`, changefreq: 'weekly', priority: 0.8 });
-    });
-  
-    sitemap.end();
-  
-    const xml = await streamToPromise(sitemap);
-    res.header('Content-Type', 'application/xml');
-    res.send(xml.toString());
-  });
   // All regular routes use the Angular engine
   server.get('*', (req, res, next) => {
     const { protocol, originalUrl, baseUrl, headers } = req;
