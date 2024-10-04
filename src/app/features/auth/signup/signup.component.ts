@@ -1,7 +1,10 @@
 import { Component } from '@angular/core';
 import { Auth, createUserWithEmailAndPassword, updateProfile } from '@angular/fire/auth';
 import { FormsModule } from '@angular/forms';
-import { catchError, from, Observable } from 'rxjs';
+import { catchError, concatMap, from, Observable } from 'rxjs';
+import { AuthService } from '../../../core/services/auth/auth.service';
+import { Router } from '@angular/router';
+import { ProfileService } from '../../../core/services/profile/profile.service';
 
 @Component({
   selector: 'app-signup',
@@ -14,22 +17,35 @@ export class SignupComponent {
 username=''
 email=''
 password=''
-constructor(private firebaseAuth: Auth){
+constructor(
+  private firebaseAuth: Auth,
+  private authService: AuthService,
+  private profileService: ProfileService,
+  private router: Router
+){
  
 }
 signup(){
   console.log(this.username, this.email, this.password)
-  const promise = createUserWithEmailAndPassword(this.firebaseAuth, this.email, this.password)
-  .then((res:any) => updateProfile(res.user, {displayName: this.username}))
-  from(promise).pipe(
-    catchError(() => {throw new Error('dijos')})
-  ).subscribe({
-    next: (value) => {
-      console.log('Success', value);
+  this.authService.register(this.email, this.password).pipe(
+    concatMap((res)=>this.profileService.updateUserProfile(res.user, {displayName:this.username}))
+  ).
+  subscribe({
+    next:(result) => {
+      console.log(result);
+      this.router.navigateByUrl('')
     },
-    error: (error) => {
-      console.error('Error', error);
-    }
+    error:()=>console.log('error occured during registration')
   })
 }
+
+googleAuth(){
+  this.authService.googleAuth().subscribe({
+    next: (value) => {
+      console.log(value);
+      this.router.navigateByUrl('')
+    },
+    error: (error) => {console.error(error)} 
+  })
+  }
 }
