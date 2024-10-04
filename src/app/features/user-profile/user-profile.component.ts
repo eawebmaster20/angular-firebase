@@ -1,30 +1,43 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
+import { Router } from '@angular/router';
+import { AuthService } from '../../core/services/auth/auth.service';
 import { ProfileService } from '../../core/services/profile/profile.service';
-type User = import('firebase/auth').User;
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-user-profile',
   standalone: true,
-  imports: [],
+  imports: [FormsModule],
   templateUrl: './user-profile.component.html',
   styleUrl: './user-profile.component.scss'
 })
-export class UserProfileComponent implements OnInit {
-username = 'user\'s username'
-postCount = '25'
-email = 'user\'s email';
-constructor(private profileService: ProfileService) { }
+export class UserProfileComponent {
 
-ngOnInit(){ }
+  constructor(
+    public authService: AuthService,
+    public profileService: ProfileService,
+    private router: Router,
+  ) {}
 
-updateProfile(){
-  if (this.profileService.user) {
-    this.profileService.updateUserProfile(
-      this.profileService.user, 
-      { 
-        displayName: 'newly set name', 
-        photoURL:'com/blog/image-url-for-testing/'
-      });
+  ngOnInit() {
+    
   }
+
+  logout() {
+    this.authService.logout().subscribe({
+      next:()=>{
+        this.router.navigateByUrl('/home')
+      },
+      error: (err) => console.error('Error logging out:', err)
+    });
+      
+  }
+
+  goToHome() {
+    this.router.navigateByUrl('/home')
+  }
+
+  updateProfile(url:string, username:string) {
+    this.profileService.updateUserProfile(this.profileService.user!,  { displayName: username, photoURL: url })
   }
 }
