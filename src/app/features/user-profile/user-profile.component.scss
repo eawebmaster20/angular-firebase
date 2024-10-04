@@ -1,65 +1,134 @@
-
-
-.center {
-	width: 300px;
-	height: 260px;
-	border-radius: 3px;
-	box-shadow: 8px 10px 15px 0 rgba(0, 0, 0, 0.2);
-	background: #fff;
-	display: flex;
-	align-items: center;
-	justify-content: space-evenly;
-	flex-direction: column;
+.home {
+    position: absolute;
+    z-index: 3;
+    top: 70px;
+    width: 40px;
+    height: 40px;
+    background: crimson;
+    border-radius: 50%;
+    display: grid;
+    place-items: center;
+    color: white;
+    cursor: pointer;
 }
 
-.title {
-	width: 100%;
-	height: 50px;
-	border-bottom: 1px solid #999;
-	text-align: center;
+.profile-img{
+    width: 95px;
+    height: 95px;
 }
+.user-container {
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 
-h1 {
-	font-size: 16px;
-	font-weight: 300;
-	color: #666;
-}
+    & .wrapper {
+        width: 400px;
+        height: fit-content;
+        background: lightgrey;
+        border-radius: 8px;
+        padding: 60px 40px;
+        box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
 
-.dropzone {
-	width: 100px;
-	height: 80px;
-	border: 1px dashed #999;
-	border-radius: 3px;
-	text-align: center;
-}
+        .user-details {
+            display: flex;
+            align-items: Center;
+            gap: 20px;
+            margin-bottom: 2rem;
 
-.upload-icon {
-	margin: 25px 2px 2px 2px;
-}
+            .profile-image {
+                position: relative;
+                
+                svg.no-profile-image {
+                    width: 100px;
+                    width: 100px;
+                    border: 3px solid crimson;
+                    border-radius: 50%;
+                    
+                    path {
+                        fill: grey;
+                    }
+                }
 
-.upload-input {
-	position: relative;
-	top: -62px;
-	left: 0;
-	width: 100%;
-	height: 100%;
-	opacity: 0;
-}
+                .camera-wrapper {
+                    position: absolute;
+                    z-index: 3;
+                    top: 0;
+                    left: 70px;
+                    width: 30px;
+                    height: 30px;
+                    background: crimson;
+                    display: grid;
+                    place-items: center;
+                    border-radius: 50%;
+                    color: white;
+                    border: 1px solid lightgrey;
+                    cursor: pointer;
+                    transition: .2s ease-in-out;
+                }
 
-.btn {
-	display: block;
-	width: 140px;
-	height: 40px;
-	background: darkmagenta;
-	color: #fff;
-	border-radius: 3px;
-	border: 0;
-	box-shadow: 0 3px 0 0 hotpink;
-	transition: all 0.3s ease-in-out;
-	font-size: 14px;
-}
+                .camera-wrapper:hover {
+                    scale: 1.1;
+                }
+    
+            }
+                .username-email {
+                    
+                    .username {
+                        font-size: 1.5rem;
+						font-weight: 400;
+                    }
+                    .user-email {
+                        font-size: 1rem;
+                        color: crimson;
+                    }
+                }
+        } //user-details ends here
 
-.btn:hover {
-	background: rebeccapurple;
-	box-shadow: 0 3px 0 0 deeppink;
+        .bio {
+            color: rgb(56, 56, 56);
+            margin-bottom: 2rem;
+        }
+
+        .editable {
+            display: flex;
+            gap: 10px;
+
+            .country, .occupation {
+                background:rgb(187, 187, 187);
+                padding: 5px 10px;
+                border-radius: 8px;
+                color: rgb(56, 56, 56);
+            }
+        }
+
+        .user-profile-upload {
+            margin-top: 2rem;
+            display: none;
+
+            span.add-profile-url {
+                font-size: .8rem;
+                color: rgb(56, 56, 56);
+            }
+
+            input.url-input {
+                width: 100%;
+                height: 40px;
+                border-radius: 8px;
+                border: none;
+                background:rgb(187, 187, 187);
+                color:rgb(56, 56, 56);
+                padding: 0 10px;
+                margin-top: .5rem;
+                font-family: "Outfit", sans-serif;
+            }
+
+            input.url-input:focus {
+                outline: none;
+            }
+
+        }
+
+    }
 }
