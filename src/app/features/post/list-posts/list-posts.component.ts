@@ -6,6 +6,7 @@ import { FormsModule } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
 import { ProfileService } from '../../../core/services/profile/profile.service';
 import { AuthService } from '../../../core/services/auth/auth.service';
+import { LocalstorageService } from '../../../core/services/localStorage/localstorage.service';
 
 @Component({
   selector: 'app-list-posts',
@@ -29,6 +30,7 @@ export class ListPostsComponent implements OnInit {
     private router: Router,
     public profileService:ProfileService,
     public authService: AuthService,
+    private localStorage:LocalstorageService
   ) { }
 
 
@@ -76,7 +78,7 @@ export class ListPostsComponent implements OnInit {
   onSubmit(){
     console.log(this.newPost);
     this.createPost();
-    this.getPosts();
+    // this.getPosts();
   }
 
   getPosts(){
@@ -93,6 +95,7 @@ export class ListPostsComponent implements OnInit {
 
   goToDetail(post:IPost){
     this.postService.selectedPost = post;
+    this.localStorage.setItem('selectedPost', post)
     this.router.navigate(['/post-details']);
   }
   updatePost(){

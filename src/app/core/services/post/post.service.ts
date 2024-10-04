@@ -19,7 +19,7 @@ export class PostService {
   }
   constructor(
     private newDb: Database,
-    private firestore: Firestore
+    private firestore: Firestore,
   ) { }
 
   createPost(post: IPost){
@@ -59,7 +59,7 @@ export class PostService {
     return from(addDoc(commentCollection, comment))
   }
   
-  getAllPostComments(postId:string): Observable<IComment[]> {
+  getAllPostComments(): Observable<IComment[]> {
     const commentsCollection = collection(this.firestore, 'comments');
     return collectionData(commentsCollection, { idField: 'id' }) as Observable<IComment[]>;
   }

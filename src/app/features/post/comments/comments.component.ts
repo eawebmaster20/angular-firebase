@@ -9,6 +9,7 @@ import { ProfileService } from '../../../core/services/profile/profile.service';
 import { forkJoin, from, map, mergeMap } from 'rxjs';
 import { AuthService } from '../../../core/services/auth/auth.service';
 import { IUser } from '../../../core/interfaces/user.interface';
+import { LocalstorageService } from '../../../core/services/localStorage/localstorage.service';
 
 // interface userComment extends IComment{
 //   username: string;
@@ -29,19 +30,20 @@ export class CommentsComponent implements OnInit {
   and delete a comment in the Comments Collection.
   */
   comment:IComment= { 
-    postId: this.postService.selectedPost.id || '', 
+    postId: this.localStorage.getItem('selectedPost').id || '', 
     userId: this.profileService.user?.uid||'', body: '', date: (new Date()).toDateString(), }
   comments: IComment[] = [];
 
   constructor(
     private firestore: Firestore,
-    public postService: PostService,
+    public localStorage: LocalstorageService,
     public profileService: ProfileService,
+    public postService: PostService,
     private authService: AuthService,
   ){ }
 
   ngOnInit(): void {
-    this.postService.getAllPostComments('').subscribe({
+    this.postService.getAllPostComments().subscribe({
       next: (comments) => {
         this.comments = comments.map(comment => ({
           id: comment.id,
